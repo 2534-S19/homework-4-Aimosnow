@@ -64,9 +64,9 @@ bool finished=false;
                                 == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG;
 
         }
-        void UARTPutChar(uint32_t moduleInstance, uint8_t tChar)
+        void UARTPutString(uint32_t moduleInstance, *response)
         {
-            UART_transmitData(EUSCI_A0_BASE, tChar);
+            UART_transmitData(EUSCI_A0_BASE, *response);
 
         }
         return 0;
