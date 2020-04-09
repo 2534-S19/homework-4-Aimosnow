@@ -7,7 +7,7 @@ int main(void)
     char *response = "\n\n\r2534 is the best course in the curriculum!\r\n\n";
 
     // TODO: Declare the variables that main uses to interact with your state machine.
-bool finished=false;
+
 
     // Stops the Watchdog timer.
     initBoard();
@@ -40,19 +40,29 @@ bool finished=false;
     {
         // TODO: Check the receive interrupt flag to see if a received character is available.
         //       Return 0xFF if no character is available.
-        bool UARTHasChar(uint32_t moduleInstance)
+        if (UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)== EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)
         {
-            return UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)
-                            == EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG;
+            rChar= UART_receiveData(EUSCI_A0_BASE);
         }
-
-
+        else
+        {
+            rChar=0xFF;
+        }
 
         // TODO: If an actual character was received, echo the character to the terminal AND use it to update the FSM.
         //       Check the transmit interrupt flag prior to transmitting the character.
-        rChar= UART_receiveData(EUSCI_A0_BASE);
-        charFSM(char rChar);
-
+        if(rChar!=0xFF)
+        {
+          charFSM(char rChar);
+        }
+        if(finished=true)
+        {
+        *response = "\n\n\r2534 is the best course in the curriculum!\r\n\n";
+        }
+        else
+        {
+            return 0;
+        }
 
 
         // TODO: If the FSM indicates a successful string entry, transmit the response string.
@@ -60,17 +70,13 @@ bool finished=false;
         //       Make sure to reset the success variable after transmission.
         bool UARTCanSend(uint32_t moduleInstance)
         {
-            return UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG)
-                                == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG;
-
+            return UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG) == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG;
         }
         void UARTPutString(uint32_t moduleInstance, *response)
         {
             UART_transmitData(EUSCI_A0_BASE, *response);
-
         }
         return 0;
-
     }
 }
 
@@ -81,9 +87,41 @@ void initBoard()
 
 // TODO: FSM for detecting character sequence.
 bool charFSM(char rChar)
-{
-    bool finished = false;
-
-
+{ bool finished = false;
+  bool start = false;
+  bool step2=false;
+  bool step3=false;
+   if (rChar=2)
+   {
+       start = true;
+   }
+   else
+   {
+      start =false;
+   }
+   if (start = true && rChar=5)
+   {
+      step2= true;
+   }
+   else
+   {
+       step2=false;
+   }
+   if (step2=true && rChar=3)
+   {
+       step3=true;
+   }
+   else
+   {
+       step3=false;
+   }
+   if(step3=true && rChae=4)
+   {
+       finished =true;
+   }
+   else
+   {
+       finished= false;
+   }
     return finished;
 }

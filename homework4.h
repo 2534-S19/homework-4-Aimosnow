@@ -13,6 +13,12 @@ void initBoard();
 bool charFSM(char rChar);
 
 // TODO: Define any constants that are local to homework.c using #define
-
+#define rChar
+#define *response
+#define string
+#define finsieded
+#define start
+#define step2
+#define step3
 
 #endif /* HOMEWORK4_H_ */
