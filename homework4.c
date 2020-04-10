@@ -1,5 +1,6 @@
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include "homework4.h"
+bool charFSM(char rChar);
 
 int main(void)
 {
@@ -107,7 +108,7 @@ bool charFSM(char rChar)
    {
        step2=false;
    }
-   if (step2=true && rChar=3)
+   if (step2=true && rChar=3 && start=false)
    {
        step3=true;
    }
@@ -115,7 +116,7 @@ bool charFSM(char rChar)
    {
        step3=false;
    }
-   if(step3=true && rChae=4)
+   if(step3=true && rChar=4 && step2=false)
    {
        finished =true;
    }
