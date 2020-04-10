@@ -44,11 +44,11 @@ int main(void)
         //       Return 0xFF if no character is available.
         if (UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG) == EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)
         {
-            rChar = UART_receiveData(EUSCI_A0_BASE);
+            rChar == UART_receiveData(EUSCI_A0_BASE);
         }
         else
         {
-            rChar = 0xFF;
+            rChar == 0xFF;
         }
 
         // TODO: If an actual character was received, echo the character to the terminal AND use it to update the FSM.
@@ -57,7 +57,7 @@ int main(void)
         {
             finished = charFSM(rChar);
         }
-        if (finished == true)
+        if (finished == true)//if type in 2534 represent  *response
         {
             *response = "\n\n\r2534 is the best course in the curriculum!\r\n\n";
         }
@@ -94,7 +94,7 @@ bool charFSM(char rChar)
     bool start = false;
     bool step2 = false;
     bool step3 = false;
-    if (rChar == 2)
+    if (rChar == 2) //start with 2
         start = true;
     }
     else
@@ -102,7 +102,7 @@ bool charFSM(char rChar)
         start = false;
     }
 
-    if (start == true && rChar == 5)
+    if (start == true && rChar == 5) //make sure 2 at first and 5 and second
     {
         step2 = true;
     }
@@ -111,7 +111,7 @@ bool charFSM(char rChar)
         step2 = false;
     }
 
-    if (step2 == true && rChar == 3 && start == false)
+    if (step2 == true && rChar == 3 && start == false)//make sure the 3 appear after the 5
     {
         step3 = true;
     }
@@ -120,7 +120,7 @@ bool charFSM(char rChar)
         step3 = false;
     }
 
-    if (step3 == true && rChar == 4 && step2 == false)
+    if (step3 == true && rChar == 4 && step2 == false)// After 4 enter, the string will appear
     {
         finished = true;
     }
@@ -129,5 +129,5 @@ bool charFSM(char rChar)
         finished = false;
     }
 
-    return finished;
+    return finished;//initial
 }
